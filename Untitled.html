@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.7px Arial; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;title&gt;Michigan Snowbelt Observer&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;meta charset="utf-8" /&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" /&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;style&gt;</span></p>
+<p class="p1"><span class="s1">        #map { height: 100vh; width: 100vw; }</span></p>
+<p class="p1"><span class="s1">        .map-popup {</span></p>
+<p class="p1"><span class="s1">            max-width: 400</span></p>
+<p class="p1"><span class="s1">            text-align: center;</span></p>
+<p class="p1"><span class="s1">            font-family: Arial, sans-serif;</span></p>
+<p class="p1"><span class="s1">        }</span></p>
+<p class="p1"><span class="s1">        .map-popup iframe, .map-popup img {</span></p>
+<p class="p1"><span class="s1">            max-width: 100%;</span></p>
+<p class="p1"><span class="s1">            height: auto;</span></p>
+<p class="p1"><span class="s1">            margin-bottom: 10px;</span></p>
+<p class="p1"><span class="s1">        }</span></p>
+<p class="p1"><span class="s1">        .map-popup button {</span></p>
+<p class="p1"><span class="s1">            display: inline-block;</span></p>
+<p class="p1"><span class="s1">            padding: 8px 12px;</span></p>
+<p class="p1"><span class="s1">            font-size: 14px;</span></p>
+<p class="p1"><span class="s1">            background-color: #007BFF;</span></p>
+<p class="p1"><span class="s1">            color: white;</span></p>
+<p class="p1"><span class="s1">            border: none;</span></p>
+<p class="p1"><span class="s1">            border-radius: 5px;</span></p>
+<p class="p1"><span class="s1">            cursor: pointer;</span></p>
+<p class="p1"><span class="s1">            margin-bottom: 10px;</span></p>
+<p class="p1"><span class="s1">        }</span></p>
+<p class="p1"><span class="s1">        .map-popup button:hover {</span></p>
+<p class="p1"><span class="s1">            background-color: #0056b3;</span></p>
+<p class="p1"><span class="s1">        }</span></p>
+<p class="p1"><span class="s1">        .weather-info {</span></p>
+<p class="p1"><span class="s1">            font-size: 14px;</span></p>
+<p class="p1"><span class="s1">            margin-top: 10px;</span></p>
+<p class="p1"><span class="s1">        }</span></p>
+<p class="p1"><span class="s1">        .courtesy-note {</span></p>
+<p class="p1"><span class="s1">            font-size: 12px;</span></p>
+<p class="p1"><span class="s1">            color: #555;</span></p>
+<p class="p1"><span class="s1">            margin-top: 10px;</span></p>
+<p class="p1"><span class="s1">        }</span></p>
+<p class="p1"><span class="s1">    &lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;div id="map"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;script&gt;</span></p>
+<p class="p1"><span class="s1">        const map = L.map('map').setView([45, -85], 6);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {</span></p>
+<p class="p1"><span class="s1">            attribution: '© &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'</span></p>
+<p class="p1"><span class="s1">        }).addTo(map);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">        const pinData = [</span></p>
+<p class="p1"><span class="s1">    { city: "Wakefield", lat: 46.494796, lng: -89.923172, videoUrl: "https://www.youtube.com/embed/oGb4tcsTJfg", courtesy: "Courtesy of Snow Chaser's Lodge" },</span></p>
+<p class="p1"><span class="s1">    { city: "Mancelona", lat: 44.7942, lng: -85.0922, videoUrl: "https://ipcamlive.com/player/player.php?alias=61019fa1322cc", courtesy: "Courtesy of Settings Restaurant" },</span></p>
+<p class="p1"><span class="s1">    { city: "Alanson", lat: 45.4626, lng: -84.7475, videoUrl: "http://spankys.safe100.net:8080/video.mjpg?q=30&amp;fps=33&amp;id=0.5", courtesy: "Courtesy of Spanky's Powersports" },</span></p>
+<p class="p1"><span class="s1">    { city: "Indian River", lat: 45.5183, lng: -84.6289, videoUrl: "http://24.247.18.14/cgi-bin/viewer/video.jpg", courtesy: "Courtesy of Fay Martin River Resort" },</span></p>
+<p class="p1"><span class="s1">    { city: "Gaylord", title: "Gaylord, MI - Trail 7", lat: 45.0286, lng: -84.6814, videoUrl: "https://www.youtube.com/embed/hKRglZeUGI0", courtesy: "Courtesy of Sledview.com" },</span></p>
+<p class="p1"><span class="s1">    { city: "Gaylord", title: "Gaylord, MI - NWS Snowstick", lat: 45.0386, lng: -84.7014, videoUrl: "https://www.weather.gov/images/apx/webcam/snowstick.jpg", courtesy: "Courtesy of NWS Gaylord" },</span></p>
+<p class="p1"><span class="s1">    { city: "Calumet", lat: 47.2476, lng: -88.4522, videoUrl: "https://www.pasty.com/bridge/MainST.jpg", courtesy: "Courtesy of Superior Properties" },</span></p>
+<p class="p1"><span class="s1">    { city: "Calumet", lat: 47.2480, lng: -88.4534, videoUrl: "https://tsl.uarhelp.com/mjpg/video.mjpg", courtesy: "Courtesy of The Trailside Lodge" },</span></p>
+<p class="p1"><span class="s1">    { city: "Marquette", lat: 46.5586, lng: -87.4065, videoUrl: "https://it.nmu.edu/campics/jxj.jpg", courtesy: "Courtesy of Northern Michigan University" },</span></p>
+<p class="p1"><span class="s1">    { city: "Bergland", lat: 46.6667, lng: -89.5167, videoUrl: "https://www.timberlinesport.net/camera/tlsmain.jpg", courtesy: "Courtesy of Timberline Sports" },</span></p>
+<p class="p1"><span class="s1">    { city: "Gaylord", title: "Gaylord, MI - EarthCam", lat: 45.0333, lng: -84.6745, videoUrl: "https://www.youtube.com/embed/DQAUwQMcF1w", courtesy: "Courtesy of EarthCam YouTube Channel" },</span></p>
+<p class="p1"><span class="s1">    { city: "Grayling", lat: 44.661, lng: -84.714, videoUrl: "https://video.nest.com/embedded/live/fUEpooBBRQ?autoplay=0", courtesy: "Courtesy of Camp Makwa" },</span></p>
+<p class="p1"><span class="s1">    { city: "Mackinac City", lat: 45.777, lng: -84.727, videoUrl: "https://www.youtube.com/embed/DaKrzRiiE1s", courtesy: "Courtesy of Riviera Motel" },</span></p>
+<p class="p1"><span class="s1">    { city: "Grand Marais", lat: 46.6712, lng: -85.985, videoUrl: "https://video.nest.com/embedded/live/6turwtgSUw?autoplay=0", courtesy: "Courtesy of The Bayshore Market" },</span></p>
+<p class="p1"><span class="s1">    { city: "Grand Marais", lat: 46.6725, lng: -85.9812, videoUrl: "https://video.nest.com/embedded/live/A2SY1WyGt4?autoplay=0", courtesy: "Courtesy of Superior Hardware and ExploreMunising.com" },</span></p>
+<p class="p1"><span class="s1">    { city: "Newberry", lat: 46.3558, lng: -85.5109, videoUrl: "https://video.nest.com/embedded/live/FyfabqFRq6?autoplay=0", courtesy: "Courtesy of The Newberry News" },</span></p>
+<p class="p1"><span class="s1">    { city: "Grand Haven", lat: 43.0631, lng: -86.2282, videoUrl: "http://99.129.240.227:8005/cgi-bin/api.cgi?cmd=Snap&amp;channel=0&amp;rs=wuuPhkmUCeI9WG7C&amp;user=admin&amp;password=vtk1453", courtesy: "No courtesy" },</span></p>
+<p class="p1"><span class="s1">    { city: "Allendale", lat: 42.9728, lng: -85.9536, videoUrl: "https://cam-antmedia.gvsu.edu:5443/LiveApp/play.html?name=299282376489809678477713", courtesy: "Courtesy of Grand Valley State University" },</span></p>
+<p class="p1"><span class="s1">    { city: "Hersey", lat: 43.8564, lng: -85.445, videoUrl: "https://www.herseyweather.com/snowcam/image.jpg", courtesy: "Courtesy of HerseyWeather.com" },</span></p>
+<p class="p1"><span class="s1">    { city: "Cadillac", lat: 44.2511, lng: -85.4012, videoUrl: "https://api.wetmet.net/widgets/stream/frame.php?uid=ab6fdd36f8fc8b32e001e26112e01ffb", courtesy: "Courtesy of 9and10 News" },</span></p>
+<p class="p1"><span class="s1">    { city: "Houghton Lake", lat: 44.3148, lng: -84.7637, videoUrl: "http://www.houghtonlakecam.com/image.jpg", courtesy: "Courtesy of HoughtonLakeCam.com" },</span></p>
+<p class="p1"><span class="s1">    { city: "Bellaire", lat: 44.9761, lng: -85.2114, videoUrl: "https://www.bmarsh.com/weather/back1s.jpg", courtesy: "Courtesy of bmarsh.com" },</span></p>
+<p class="p1"><span class="s1">    { city: "St Ignace", lat: 45.8753, lng: -84.7275, videoUrl: "https://webcam.tufftrux.us/video.jpg", courtesy: "Courtesy of Voyager Inn" },</span></p>
+<p class="p1"><span class="s1">    { city: "Sault Ste Marie", lat: 46.4953, lng: -84.3453, videoUrl: "https://www.youtube.com/embed/2djzpbW_E1Q", courtesy: "Courtesy of StreamTime Live YouTube Channel" }</span></p>
+<p class="p1"><span class="s1">];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">        let michiganBounds = L.latLngBounds();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">        pinData.forEach(pin =&gt; {</span></p>
+<p class="p1"><span class="s1">            const marker = L.marker([pin.lat, pin.lng]).addTo(map);</span></p>
+<p class="p1"><span class="s1">            michiganBounds.extend([pin.lat, pin.lng]);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pin.lat}&amp;longitude=${pin.lng}&amp;current_weather=true&amp;temperature_unit=fahrenheit`)</span></p>
+<p class="p1"><span class="s1">                .then(response =&gt; response.json())</span></p>
+<p class="p1"><span class="s1">                .then(weatherData =&gt; {</span></p>
+<p class="p1"><span class="s1">                    const temperature = weatherData.current_weather.temperature;</span></p>
+<p class="p1"><span class="s1">                    const weatherDescription = getWeatherDescription(weatherData.current_weather.weathercode);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">                    let popupContent = `</span></p>
+<p class="p1"><span class="s1">                        &lt;div class="map-popup"&gt;</span></p>
+<p class="p1"><span class="s1">                            &lt;h3&gt;${pin.title || pin.city}&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1">                            &lt;iframe src="${pin.videoUrl}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</span></p>
+<p class="p1"><span class="s1">                            &lt;div class="weather-info"&gt;</span></p>
+<p class="p1"><span class="s1">                                &lt;p&gt;&lt;b&gt;Weather:&lt;/b&gt; ${weatherDescription}&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">                                &lt;p&gt;&lt;b&gt;Temperature:&lt;/b&gt; ${temperature}°F&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">                            &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">                            &lt;button onclick="window.open('${pin.videoUrl}', '_blank');"&gt;OPEN IN NEW WINDOW&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">                            &lt;p class="courtesy-note"&gt;${pin.courtesy}&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">                        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">                    `;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">                    marker.bindPopup(popupContent);</span></p>
+<p class="p1"><span class="s1">                })</span></p>
+<p class="p1"><span class="s1">                .catch(error =&gt; {</span></p>
+<p class="p1"><span class="s1">                    console.error("Error fetching weather data:", error);</span></p>
+<p class="p1"><span class="s1">                });</span></p>
+<p class="p1"><span class="s1">        });</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">        map.fitBounds(michiganBounds, { padding: [50, 50] });</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">        function getWeatherDescription(weathercode) {</span></p>
+<p class="p1"><span class="s1">            const descriptions = {</span></p>
+<p class="p1"><span class="s1">                0: "Clear sky",</span></p>
+<p class="p1"><span class="s1">                1: "Mainly clear",</span></p>
+<p class="p1"><span class="s1">                2: "Partly cloudy",</span></p>
+<p class="p1"><span class="s1">                3: "Overcast",</span></p>
+<p class="p1"><span class="s1">                45: "Foggy",</span></p>
+<p class="p1"><span class="s1">                48: "Foggy",</span></p>
+<p class="p1"><span class="s1">                51: "Drizzle",</span></p>
+<p class="p1"><span class="s1">                61: "Rain",</span></p>
+<p class="p1"><span class="s1">                71: "Snow fall",</span></p>
+<p class="p1"><span class="s1">                80: "Rain showers",</span></p>
+<p class="p1"><span class="s1">                85: "Snow showers"</span></p>
+<p class="p1"><span class="s1">            };</span></p>
+<p class="p1"><span class="s1">            return descriptions[weathercode] || "Unknown";</span></p>
+<p class="p1"><span class="s1">        }</span></p>
+<p class="p1"><span class="s1">    &lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+</body>
+</html>
